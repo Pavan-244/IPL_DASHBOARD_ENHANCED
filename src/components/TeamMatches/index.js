@@ -1,6 +1,8 @@
 /* eslint-disable react/no-unknown-property */
 import {Component} from 'react'
+import {Link} from 'react-router-dom'
 import Loader from 'react-loader-spinner'
+import {PieChart, Pie, Cell, Legend, ResponsiveContainer} from 'recharts'
 import LatestMatch from '../LatestMatch'
 import MatchCard from '../MatchCard'
 import './index.css'
@@ -52,6 +54,62 @@ class TeamMatches extends Component {
     }
   }
 
+  getMatchStatistics = () => {
+    const {recentMatches, latestMatch} = this.state
+    const allMatches = [latestMatch, ...recentMatches]
+
+    let won = 0
+    let lost = 0
+    let drawn = 0
+
+    allMatches.forEach(match => {
+      if (match.matchStatus === 'Won') {
+        won += 1
+      } else if (match.matchStatus === 'Lost') {
+        lost += 1
+      } else {
+        drawn += 1
+      }
+    })
+
+    return [
+      {name: 'Won', value: won},
+      {name: 'Lost', value: lost},
+      {name: 'Drawn', value: drawn},
+    ]
+  }
+
+  renderPieChart = () => {
+    const data = this.getMatchStatistics()
+    const colors = ['#18ed96', '#e31a1a', '#f7c545']
+
+    return (
+      <div className="pie-chart-container">
+        <h2 className="pie-chart-title">Match Statistics</h2>
+        <ResponsiveContainer width="100%" height={300}>
+          <PieChart>
+            <Pie
+              data={data}
+              cx="50%"
+              cy="50%"
+              outerRadius={100}
+              dataKey="value"
+              label={({name, value}) => `${name}: ${value}`}
+            >
+              {data.map((entry, index) => (
+                <Cell key={`cell-${entry.name}`} fill={colors[index]} />
+              ))}
+            </Pie>
+            <Legend
+              iconType="circle"
+              wrapperStyle={{color: '#ffffff', fontSize: '14px'}}
+            />
+          </PieChart>
+        </ResponsiveContainer>
+      </div>
+    )
+  }
+
   render() {
     const {teamBannerUrl, latestMatch, recentMatches, isLoading} = this.state
 
@@ -68,11 +126,15 @@ class TeamMatches extends Component {
           </div>
         ) : (
           <div>
+            <Link to="/" className="back-button">
+              Back
+            </Link>
             <img
               src={teamBannerUrl}
               alt="team banner"
               className="team-banner"
             />
+            {this.renderPieChart()}
             <h2 className="latest-matches-title">Latest Matches</h2>
             <LatestMatch details={latestMatch} />
             <ul className="recent-matches-list">

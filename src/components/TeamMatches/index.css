@@ -6,10 +6,41 @@
   font-family: Bree Serif;
 }
 
+.back-button {
+  display: inline-block;
+  padding: 10px 24px;
+  margin-bottom: 20px;
+  background-color: #475569;
+  color: #ffffff;
+  text-decoration: none;
+  border-radius: 8px;
+  font-family: Bree Serif;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.back-button:hover {
+  background-color: #64748b;
+}
+
 .team-banner {
   width: 100%;
   border-radius: 10px;
   margin-bottom: 20px;
+}
+
+.pie-chart-container {
+  background-color: #0f172a;
+  border-radius: 12px;
+  padding: 24px;
+  margin-bottom: 24px;
+}
+
+.pie-chart-title {
+  font-size: 24px;
+  margin-bottom: 8px;
+  text-align: center;
 }
 
 .latest-matches-title {
