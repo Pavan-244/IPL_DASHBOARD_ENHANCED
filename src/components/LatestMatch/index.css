@@ -1,0 +1,33 @@
+.latest-match-card {
+  background-color: #0f172a;
+  border-radius: 10px;
+  padding: 20px;
+  margin-bottom: 20px;
+  color: #ffffff;
+  font-family: Bree Serif;
+}
+
+.latest-match-main {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.latest-match-main img.team-logo {
+  width: 120px;
+  height: 120px;
+}
+
+.team-name {
+  font-size: 24px;
+  margin-bottom: 8px;
+}
+
+.latest-match-card p {
+  margin: 4px 0;
+}
+
+hr {
+  border: 0.5px solid #475569;
+  margin: 10px 0;
+}
