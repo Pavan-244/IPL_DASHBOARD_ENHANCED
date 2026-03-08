@@ -1,8 +1,7 @@
 /* eslint-disable react/no-unknown-property */
 import {Component} from 'react'
-import {Link} from 'react-router-dom'
 import Loader from 'react-loader-spinner'
-import {PieChart, Pie, Cell, Legend, ResponsiveContainer} from 'recharts'
+import {PieChart, Pie, Cell, Legend} from 'recharts'
 import LatestMatch from '../LatestMatch'
 import MatchCard from '../MatchCard'
 import './index.css'
@@ -79,6 +78,11 @@ class TeamMatches extends Component {
     ]
   }
 
+  onClickBack = () => {
+    const {history} = this.props
+    history.push('/')
+  }
+
   renderPieChart = () => {
     const data = this.getMatchStatistics()
     const colors = ['#18ed96', '#e31a1a', '#f7c545']
@@ -86,26 +90,24 @@ class TeamMatches extends Component {
     return (
       <div className="pie-chart-container">
         <h2 className="pie-chart-title">Match Statistics</h2>
-        <ResponsiveContainer width="100%" height={300}>
-          <PieChart>
-            <Pie
-              data={data}
-              cx="50%"
-              cy="50%"
-              outerRadius={100}
-              dataKey="value"
-              label={({name, value}) => `${name}: ${value}`}
-            >
-              {data.map((entry, index) => (
-                <Cell key={`cell-${entry.name}`} fill={colors[index]} />
-              ))}
-            </Pie>
-            <Legend
-              iconType="circle"
-              wrapperStyle={{color: '#ffffff', fontSize: '14px'}}
-            />
-          </PieChart>
-        </ResponsiveContainer>
+        <PieChart width={400} height={300}>
+          <Pie
+            data={data}
+            cx="50%"
+            cy="50%"
+            outerRadius={100}
+            dataKey="value"
+            label={({name, value}) => `${name}: ${value}`}
+          >
+            {data.map((entry, index) => (
+              <Cell key={`cell-${entry.name}`} fill={colors[index]} />
+            ))}
+          </Pie>
+          <Legend
+            iconType="circle"
+            wrapperStyle={{color: '#ffffff', fontSize: '14px'}}
+          />
+        </PieChart>
       </div>
     )
   }
@@ -126,9 +128,13 @@ class TeamMatches extends Component {
           </div>
         ) : (
           <div>
-            <Link to="/" className="back-button">
+            <button
+              type="button"
+              className="back-button"
+              onClick={this.onClickBack}
+            >
               Back
-            </Link>
+            </button>
             <img
               src={teamBannerUrl}
               alt="team banner"
